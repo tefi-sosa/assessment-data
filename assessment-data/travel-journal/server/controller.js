@@ -36,10 +36,20 @@ module.exports = {
     getCities: (req, res) => {
         sequelize.query(`SELECT city_id, cities.name as city, rating, countries.country_id, countries.name as country
         FROM countries
-        JOIN cities ON cities.country_id = countries.country_id;`)
+        JOIN cities ON cities.country_id = countries.country_id
+        ORDER BY rating DESC;`)
             .then(dbRes => res.status(200).send(dbRes[0]))
             .catch(err => console.log(err))
-    },    
+    },
+    deleteCity: (req, res) => {
+
+        console.log(req.params.id)
+        sequelize.query(`DELETE
+        FROM cities
+        WHERE city_id = '${req.params.id}';`)
+            .then(dbRes => res.status(200).send(dbRes[0]))
+            .catch(err => console.log(err))
+    },      
     seed: (req, res) => {
         sequelize.query(`
             drop table if exists cities;
@@ -56,6 +66,12 @@ module.exports = {
                 rating integer,
                 country_id integer references countries(country_id)
             );
+
+            // insert into cities (name, rating, country_id)
+            // values ('Buenos Aires', 3, '7'),
+            // ('Cordoba', 4, '38'),
+            // ('Cartagena', 5, '7'),
+            // ('Lima', 3, '138');
 
             insert into countries (name)
             values ('Afghanistan'),
