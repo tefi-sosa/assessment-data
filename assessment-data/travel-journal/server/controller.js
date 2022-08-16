@@ -67,12 +67,6 @@ module.exports = {
                 country_id integer references countries(country_id)
             );
 
-            // insert into cities (name, rating, country_id)
-            // values ('Buenos Aires', 3, '7'),
-            // ('Cordoba', 4, '38'),
-            // ('Cartagena', 5, '7'),
-            // ('Lima', 3, '138');
-
             insert into countries (name)
             values ('Afghanistan'),
             ('Albania'),
@@ -269,6 +263,12 @@ module.exports = {
             ('Yemen'),
             ('Zambia'),
             ('Zimbabwe');
+
+            insert into cities (name, rating, country_id)
+            values ('Buenos Aires', 3, 7),
+            ('Cordoba', 4, 38),
+            ('Cartagena', 5, 7),
+            ('Lima', 3, 138);
         `).then(() => {
             console.log('DB seeded!')
             res.sendStatus(200)
